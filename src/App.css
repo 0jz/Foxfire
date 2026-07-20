@@ -1,0 +1,644 @@
+.app {
+  position: relative;
+  overflow-x: clip;
+}
+
+/* ---------- Pixel ornament kit (light editorial variant) ---------- */
+.theme-light {
+  --light-paper: #f6f0e4;
+  --light-ink: #241f1a;
+  --light-moss: #5c6b4a;
+  --light-ember: #d97b3f;
+  --light-mist: #b8ad98;
+  /* mist (#b8ad98) is too pale for body copy on paper — this warm gray-brown
+     keeps ~4.7:1 contrast against --light-paper for eyebrows/sub text. */
+  --light-ink-dim: #6f6558;
+
+  background: var(--light-paper);
+  color: var(--light-ink);
+}
+
+.pixel-sprite {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  display: block;
+}
+
+.paw-trail {
+  position: absolute;
+  pointer-events: none;
+}
+
+.paw-trail-print {
+  position: absolute;
+}
+
+.leaf-drift-field,
+.ember-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.leaf-drift {
+  position: absolute;
+  display: block;
+  animation: leaf-drift 9s ease-in-out infinite;
+}
+
+@keyframes leaf-drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(-14px, 16px) rotate(12deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.9;
+  }
+}
+
+.ember-blip {
+  position: absolute;
+  display: block;
+  animation: ember-flicker 2.4s ease-in-out infinite;
+}
+
+@keyframes ember-flicker {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.treeline-divider {
+  display: block;
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leaf-drift,
+  .ember-blip {
+    animation: none;
+  }
+}
+
+/* ---------- Custom cursor ---------- */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ---------- Cursor trail (paw prints) ---------- */
+.cursor-trail {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 998;
+}
+
+.cursor-trail-print {
+  position: fixed;
+  will-change: opacity, transform;
+}
+
+.cursor-trail-mud {
+  position: absolute;
+  inset: -7px;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(58, 42, 26, 0.55), rgba(58, 42, 26, 0) 72%);
+  filter: blur(0.5px);
+}
+
+@media (hover: none) {
+  .cursor-trail {
+    display: none;
+  }
+}
+
+/* ---------- Loading screen ---------- */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  background: var(--bg);
+}
+
+.loading-mark {
+  font-family: var(--serif);
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.loading-trail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 24px;
+}
+
+.loading-paw {
+  display: block;
+}
+
+.loading-bar {
+  width: 160px;
+  height: 2px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--accent);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-paw {
+    animation: none !important;
+  }
+}
+
+/* ---------- Nav ---------- */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px clamp(20px, 5vw, 64px);
+  mix-blend-mode: exclusion;
+}
+
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-link {
+  position: relative;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding-bottom: 4px;
+}
+
+.nav-link-underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+}
+
+/* ---------- Shared section layout ---------- */
+.section-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 64px);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  z-index: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 140px clamp(20px, 5vw, 64px) 80px;
+  overflow: hidden;
+}
+
+.forest-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.forest-layer {
+  position: absolute;
+  inset: -4% -4%;
+  width: 108%;
+  height: 108%;
+  /* the canvas's low-res pixel grid has its own aspect ratio — object-fit
+     keeps it uniformly scaled and cropped to fill the box instead of being
+     stretched to match whatever ratio the section happens to be. */
+  object-fit: cover;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  will-change: transform;
+}
+
+.forest-embers {
+  mix-blend-mode: screen;
+}
+
+/* On a light hero, "screen" washes the warm motes out to near-white —
+   plain alpha compositing keeps them visible as soft golden flecks. */
+.hero.theme-light .forest-embers {
+  mix-blend-mode: normal;
+}
+
+/* Full-bleed ambient backdrop used by sections below the hero — dimmer than
+   the hero's own forest and scrimmed for text contrast, no fox. */
+.section-forest-backdrop {
+  opacity: 0.6;
+}
+
+.section-forest-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 6, 9, 0.5), rgba(6, 6, 9, 0.78));
+}
+
+.hero-scene-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  pointer-events: none;
+}
+
+.hero-copy a {
+  pointer-events: auto;
+}
+
+.hero-eyebrow {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+  margin: 0 0 20px;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(42px, 7vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0 0 28px;
+}
+
+.hero-line {
+  display: block;
+}
+
+.hero-sub {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text-dim);
+  max-width: 480px;
+  margin: 0 0 40px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  background: var(--text);
+  color: var(--bg);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.hero-hint {
+  position: absolute;
+  bottom: 32px;
+  right: clamp(20px, 5vw, 64px);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  z-index: 1;
+}
+
+/* ---------- Hero: light-theme overrides (paper bg, ink text/buttons) ---------- */
+.hero.theme-light .hero-eyebrow,
+.hero.theme-light .hero-sub,
+.hero.theme-light .hero-hint {
+  color: var(--light-ink-dim);
+}
+
+.hero.theme-light .btn {
+  background: var(--light-ink);
+  color: var(--light-paper);
+}
+
+.hero.theme-light .btn-ghost {
+  background: transparent;
+  color: var(--light-ink);
+  border-color: var(--light-mist);
+}
+
+.hero.theme-light ::selection {
+  background: var(--light-ember);
+  color: var(--light-paper);
+}
+
+/* ---------- Work ---------- */
+.work {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  padding: 140px 0;
+  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg) 100%);
+}
+
+.work-eyebrow {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin: 0 0 16px;
+}
+
+.work-heading {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(30px, 4.4vw, 44px);
+  margin: 0 0 48px;
+}
+
+.work-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.work-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 72px 40px 1fr auto auto 32px;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 16px;
+  margin: 0 -16px;
+  border-top: 1px solid var(--border);
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.work-list .work-row:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.work-row:hover {
+  background-color: color-mix(in srgb, var(--biome-accent, var(--accent)) 10%, transparent);
+}
+
+.work-biome {
+  display: block;
+  width: 64px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.work-biome canvas {
+  display: block;
+}
+
+.work-n {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.work-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3vw, 30px);
+}
+
+.work-tag {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+.work-year {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.work-arrow {
+  font-size: 20px;
+  color: var(--accent);
+  justify-self: end;
+}
+
+@media (max-width: 720px) {
+  .work-row {
+    grid-template-columns: 48px 28px 1fr 24px;
+  }
+  .work-biome {
+    width: 44px;
+  }
+  .work-tag,
+  .work-year {
+    display: none;
+  }
+}
+
+/* ---------- About ---------- */
+.about {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  padding: 140px 0;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 64px;
+}
+
+.about-text p {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.45;
+  margin: 0 0 24px;
+  color: var(--text);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  align-content: start;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-value {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 44px);
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 860px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Journal (snowbound forest biome) ---------- */
+.journal {
+  position: relative;
+  z-index: 0;
+  padding: 96px 0;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.journal-inner {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px clamp(20px, 5vw, 64px) 20px;
+  text-align: center;
+}
+
+.journal-eyebrow {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin: 0 0 16px;
+}
+
+.journal-line {
+  font-family: var(--serif);
+  font-size: clamp(20px, 2.4vw, 26px);
+  line-height: 1.5;
+  color: var(--text);
+  margin: 0;
+}
+
+/* ---------- Contact ---------- */
+.contact {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  padding: 160px 0 80px;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  text-align: center;
+}
+
+.contact-eyebrow {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin: 0 0 20px;
+}
+
+.contact-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(32px, 5vw, 56px);
+  max-width: 780px;
+  margin: 0 auto 40px;
+  line-height: 1.1;
+}
+
+.contact-email {
+  display: inline-block;
+  font-family: var(--serif);
+  font-size: clamp(22px, 3vw, 30px);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+  margin-bottom: 64px;
+}
+
+.contact-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-dim);
+  max-width: 780px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+}
